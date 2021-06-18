@@ -95,6 +95,42 @@ RSpec.describe "Users", type: :request do
         subject
         expect(response.body).to include "新規投稿"
       end
+
+    end
+  end
+
+  describe "GET #edit" do
+    subject { get(edit_user_path(user_id)) }
+    context "ユーザーが存在するとき" do
+      let(:user) { create(:user) }
+      let(:user_id) { user.id }
+      it "リクエストが成功する" do
+        subject
+        # have_http_status(:ok) と同じ意味
+        expect(response).to have_http_status(200)
+      end
+
+      it "name が表示される" do
+        subject
+        expect(response.body).to include user.name
+      end
+
+      it "age が表示される" do
+        subject
+        expect(response.body).to include user.age.to_s
+      end
+
+      it "email が表示される" do
+        subject
+        expect(response.body).to include user.email
+      end
+    end
+
+    context ":id に対するユーザーが存在しないとき" do
+      let(:user_id) { 1 }
+      it "エラーが発生する" do
+        expect { subject }.to raise_error  ActiveRecord::RecordNotFound
+      end
     end
   end
 
