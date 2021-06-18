@@ -20,7 +20,7 @@ RSpec.configure do |config|
 
   # 最後までテストを実行して失敗したテストをリストアップする
   config.define_derived_metadata do |meta|
-    meta[:aggregate_failures] = true unless mata.key?(:aggregate_failures)
+    meta[:aggregate_failures] = true unless meta.key?(:aggregate_failures)
   end
 
   config.expect_with :rspec do |expectations|
